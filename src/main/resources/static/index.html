@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tickets List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #f4f4f4;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tickets</h1>
+  <ul id="tickets-list">
+    <!-- Tickets will be inserted here -->
+  </ul>
+
+  <script>
+    async function loadTickets() {
+      try {
+        const response = await fetch('http://localhost:8081/api/tickets');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const tickets = await response.json();
+        
+        const list = document.getElementById('tickets-list');
+        list.innerHTML = ''; // Clear existing items
+
+        if (tickets.length === 0) {
+          list.innerHTML = '<li>No tickets found.</li>';
+          return;
+        }
+      }
+    }
